@@ -1,70 +1,90 @@
 ---
 external help file:
 Module Name: Az.StreamAnalytics
-online version: https://docs.microsoft.com/powershell/module/az.streamanalytics/stop-azstreamanalyticsjob
+online version: https://docs.microsoft.com/powershell/module/az.streamanalytics/get-azstreamanalyticscluster
 schema: 2.0.0
 ---
 
-# Stop-AzStreamAnalyticsJob
+# Get-AzStreamAnalyticsCluster
 
 ## SYNOPSIS
-Stops a running streaming job.
-This will cause a running streaming job to stop processing input events and producing output.
+Gets information about the specified cluster.
 
 ## SYNTAX
 
-### Stop (Default)
+### List (Default)
 ```
-Stop-AzStreamAnalyticsJob -Name <String> -ResourceGroupName <String> [-SubscriptionId <String>]
- [-DefaultProfile <PSObject>] [-AsJob] [-NoWait] [-PassThru] [-Confirm] [-WhatIf] [<CommonParameters>]
+Get-AzStreamAnalyticsCluster [-SubscriptionId <String[]>] [-DefaultProfile <PSObject>] [<CommonParameters>]
 ```
 
-### StopViaIdentity
+### Get
 ```
-Stop-AzStreamAnalyticsJob -InputObject <IStreamAnalyticsIdentity> [-DefaultProfile <PSObject>] [-AsJob]
- [-NoWait] [-PassThru] [-Confirm] [-WhatIf] [<CommonParameters>]
+Get-AzStreamAnalyticsCluster -Name <String> -ResourceGroupName <String> [-SubscriptionId <String[]>]
+ [-DefaultProfile <PSObject>] [<CommonParameters>]
+```
+
+### GetViaIdentity
+```
+Get-AzStreamAnalyticsCluster -InputObject <IStreamAnalyticsIdentity> [-DefaultProfile <PSObject>]
+ [<CommonParameters>]
+```
+
+### List1
+```
+Get-AzStreamAnalyticsCluster -ResourceGroupName <String> [-SubscriptionId <String[]>]
+ [-DefaultProfile <PSObject>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Stops a running streaming job.
-This will cause a running streaming job to stop processing input events and producing output.
+Gets information about the specified cluster.
 
 ## EXAMPLES
 
-### Example 1: {{ Add title here }}
+### Example 1: Get all the stream analytics clusters under a subscription
 ```powershell
-PS C:\> {{ Add code here }}
+PS C:\> Get-AzStreamAnalyticsCluster
 
-{{ Add output here }}
+Location        Name         Type                               Etag
+--------        ----         ----                               ----
+West Central US sac-m-test01 Microsoft.StreamAnalytics/clusters 77ba5ccb-3005-40b6-b9ac-3ae9d7fb21c9
 ```
 
-{{ Add description here }}
+This command gets all the stream analytics clusters under a subscription.
 
-### Example 2: {{ Add title here }}
+### Example 2: Get all the stream analytics clusters under a resource group
 ```powershell
-PS C:\> {{ Add code here }}
+PS C:\> Get-AzStreamAnalyticsCluster -ResourceGroupName pwshaz-rg-test
 
-{{ Add output here }}
+Location        Name         Type                               Etag
+--------        ----         ----                               ----
+West Central US sac-m-test01 Microsoft.StreamAnalytics/clusters c2bcffd8-b35d-430b-9759-13af9c18ed72
 ```
 
-{{ Add description here }}
+This command gets all the stream analytics clusters under a resource group.
+
+### Example 3: Get a stream analytics cluster by name
+```powershell
+PS C:\> Get-AzStreamAnalyticsCluster -ResourceGroupName pwshaz-rg-test -Name sac-m-test01
+
+Location        Name         Type                               Etag
+--------        ----         ----                               ----
+West Central US sac-m-test01 Microsoft.StreamAnalytics/clusters c2bcffd8-b35d-430b-9759-13af9c18ed72
+```
+
+This command gets a stream analytics cluster by name.
+
+### Example 4: Get a stream analytics cluster by pipeline
+```powershell
+PS C:\> Get-AzStreamAnalyticsCluster -ResourceGroupName pwshaz-rg-test -Name sac-m-test01 | Get-AzStreamAnalyticsCluster
+
+Location        Name         Type                               Etag
+--------        ----         ----                               ----
+West Central US sac-m-test01 Microsoft.StreamAnalytics/clusters c2bcffd8-b35d-430b-9759-13af9c18ed72
+```
+
+This command gets a stream analytics cluster by pipeline.
 
 ## PARAMETERS
-
-### -AsJob
-Run the command as a job
-
-```yaml
-Type: System.Management.Automation.SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -DefaultProfile
 The credentials, account, tenant, and subscription used for communication with Azure.
@@ -87,7 +107,7 @@ To construct, see NOTES section for INPUTOBJECT properties and create a hash tab
 
 ```yaml
 Type: Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.IStreamAnalyticsIdentity
-Parameter Sets: StopViaIdentity
+Parameter Sets: GetViaIdentity
 Aliases:
 
 Required: True
@@ -98,44 +118,14 @@ Accept wildcard characters: False
 ```
 
 ### -Name
-The name of the streaming job.
+The name of the cluster.
 
 ```yaml
 Type: System.String
-Parameter Sets: Stop
-Aliases:
+Parameter Sets: Get
+Aliases: ClusterName
 
 Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -NoWait
-Run the command asynchronously
-
-```yaml
-Type: System.Management.Automation.SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -PassThru
-Returns true when the command succeeds
-
-```yaml
-Type: System.Management.Automation.SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -148,7 +138,7 @@ The name is case insensitive.
 
 ```yaml
 Type: System.String
-Parameter Sets: Stop
+Parameter Sets: Get, List1
 Aliases:
 
 Required: True
@@ -162,44 +152,13 @@ Accept wildcard characters: False
 The ID of the target subscription.
 
 ```yaml
-Type: System.String
-Parameter Sets: Stop
+Type: System.String[]
+Parameter Sets: Get, List, List1
 Aliases:
 
 Required: False
 Position: Named
 Default value: (Get-AzContext).Subscription.Id
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Confirm
-Prompts you for confirmation before running the cmdlet.
-
-```yaml
-Type: System.Management.Automation.SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -WhatIf
-Shows what would happen if the cmdlet runs.
-The cmdlet is not run.
-
-```yaml
-Type: System.Management.Automation.SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
-Position: Named
-Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -213,7 +172,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### System.Boolean
+### Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.Api20200301Preview.ICluster
 
 ## NOTES
 

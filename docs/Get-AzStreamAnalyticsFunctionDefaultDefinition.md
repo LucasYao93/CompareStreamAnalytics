@@ -1,33 +1,46 @@
 ---
 external help file:
 Module Name: Az.StreamAnalytics
-online version: https://docs.microsoft.com/powershell/module/az.streamanalytics/stop-azstreamanalyticsjob
+online version: https://docs.microsoft.com/powershell/module/az.streamanalytics/get-azstreamanalyticsfunctiondefaultdefinition
 schema: 2.0.0
 ---
 
-# Stop-AzStreamAnalyticsJob
+# Get-AzStreamAnalyticsFunctionDefaultDefinition
 
 ## SYNOPSIS
-Stops a running streaming job.
-This will cause a running streaming job to stop processing input events and producing output.
+Retrieves the default definition of a function based on the parameters specified.
 
 ## SYNTAX
 
-### Stop (Default)
+### RetrieveExpanded (Default)
 ```
-Stop-AzStreamAnalyticsJob -Name <String> -ResourceGroupName <String> [-SubscriptionId <String>]
- [-DefaultProfile <PSObject>] [-AsJob] [-NoWait] [-PassThru] [-Confirm] [-WhatIf] [<CommonParameters>]
+Get-AzStreamAnalyticsFunctionDefaultDefinition -JobName <String> -Name <String> -ResourceGroupName <String>
+ -BindingType <String> [-SubscriptionId <String[]>] [-DefaultProfile <PSObject>] [-Confirm] [-WhatIf]
+ [<CommonParameters>]
 ```
 
-### StopViaIdentity
+### Retrieve
 ```
-Stop-AzStreamAnalyticsJob -InputObject <IStreamAnalyticsIdentity> [-DefaultProfile <PSObject>] [-AsJob]
- [-NoWait] [-PassThru] [-Confirm] [-WhatIf] [<CommonParameters>]
+Get-AzStreamAnalyticsFunctionDefaultDefinition -JobName <String> -Name <String> -ResourceGroupName <String>
+ -FunctionRetrieveDefaultDefinitionParameter <IFunctionRetrieveDefaultDefinitionParameters>
+ [-SubscriptionId <String[]>] [-DefaultProfile <PSObject>] [-Confirm] [-WhatIf] [<CommonParameters>]
+```
+
+### RetrieveViaIdentity
+```
+Get-AzStreamAnalyticsFunctionDefaultDefinition -InputObject <IStreamAnalyticsIdentity>
+ -FunctionRetrieveDefaultDefinitionParameter <IFunctionRetrieveDefaultDefinitionParameters>
+ [-DefaultProfile <PSObject>] [-Confirm] [-WhatIf] [<CommonParameters>]
+```
+
+### RetrieveViaIdentityExpanded
+```
+Get-AzStreamAnalyticsFunctionDefaultDefinition -InputObject <IStreamAnalyticsIdentity> -BindingType <String>
+ [-DefaultProfile <PSObject>] [-Confirm] [-WhatIf] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Stops a running streaming job.
-This will cause a running streaming job to stop processing input events and producing output.
+Retrieves the default definition of a function based on the parameters specified.
 
 ## EXAMPLES
 
@@ -51,15 +64,15 @@ PS C:\> {{ Add code here }}
 
 ## PARAMETERS
 
-### -AsJob
-Run the command as a job
+### -BindingType
+Indicates the function binding type.
 
 ```yaml
-Type: System.Management.Automation.SwitchParameter
-Parameter Sets: (All)
+Type: System.String
+Parameter Sets: RetrieveExpanded, RetrieveViaIdentityExpanded
 Aliases:
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -81,13 +94,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -InputObject
-Identity Parameter
-To construct, see NOTES section for INPUTOBJECT properties and create a hash table.
+### -FunctionRetrieveDefaultDefinitionParameter
+Parameters used to specify the type of function to retrieve the default definition for.
+To construct, see NOTES section for FUNCTIONRETRIEVEDEFAULTDEFINITIONPARAMETER properties and create a hash table.
 
 ```yaml
-Type: Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.IStreamAnalyticsIdentity
-Parameter Sets: StopViaIdentity
+Type: Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.Api20170401Preview.IFunctionRetrieveDefaultDefinitionParameters
+Parameter Sets: Retrieve, RetrieveViaIdentity
 Aliases:
 
 Required: True
@@ -97,12 +110,28 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -Name
+### -InputObject
+Identity Parameter
+To construct, see NOTES section for INPUTOBJECT properties and create a hash table.
+
+```yaml
+Type: Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.IStreamAnalyticsIdentity
+Parameter Sets: RetrieveViaIdentity, RetrieveViaIdentityExpanded
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -JobName
 The name of the streaming job.
 
 ```yaml
 Type: System.String
-Parameter Sets: Stop
+Parameter Sets: Retrieve, RetrieveExpanded
 Aliases:
 
 Required: True
@@ -112,30 +141,15 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -NoWait
-Run the command asynchronously
+### -Name
+The name of the function.
 
 ```yaml
-Type: System.Management.Automation.SwitchParameter
-Parameter Sets: (All)
+Type: System.String
+Parameter Sets: Retrieve, RetrieveExpanded
 Aliases:
 
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -PassThru
-Returns true when the command succeeds
-
-```yaml
-Type: System.Management.Automation.SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -148,7 +162,7 @@ The name is case insensitive.
 
 ```yaml
 Type: System.String
-Parameter Sets: Stop
+Parameter Sets: Retrieve, RetrieveExpanded
 Aliases:
 
 Required: True
@@ -162,8 +176,8 @@ Accept wildcard characters: False
 The ID of the target subscription.
 
 ```yaml
-Type: System.String
-Parameter Sets: Stop
+Type: System.String[]
+Parameter Sets: Retrieve, RetrieveExpanded
 Aliases:
 
 Required: False
@@ -209,11 +223,13 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
+### Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.Api20170401Preview.IFunctionRetrieveDefaultDefinitionParameters
+
 ### Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.IStreamAnalyticsIdentity
 
 ## OUTPUTS
 
-### System.Boolean
+### Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.Api20170401Preview.IFunction
 
 ## NOTES
 
@@ -223,6 +239,9 @@ COMPLEX PARAMETER PROPERTIES
 
 To create the parameters described below, construct a hash table containing the appropriate properties. For information on hash tables, run Get-Help about_Hash_Tables.
 
+
+FUNCTIONRETRIEVEDEFAULTDEFINITIONPARAMETER <IFunctionRetrieveDefaultDefinitionParameters>: Parameters used to specify the type of function to retrieve the default definition for.
+  - `BindingType <String>`: Indicates the function binding type.
 
 INPUTOBJECT <IStreamAnalyticsIdentity>: Identity Parameter
   - `[ClusterName <String>]`: The name of the cluster.

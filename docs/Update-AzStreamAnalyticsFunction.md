@@ -1,48 +1,51 @@
 ---
 external help file:
 Module Name: Az.StreamAnalytics
-online version: https://docs.microsoft.com/powershell/module/az.streamanalytics/new-azstreamanalyticsfunction
+online version: https://docs.microsoft.com/powershell/module/az.streamanalytics/update-azstreamanalyticsfunction
 schema: 2.0.0
 ---
 
-# New-AzStreamAnalyticsFunction
+# Update-AzStreamAnalyticsFunction
 
 ## SYNOPSIS
-Creates a function or replaces an already existing function under an existing streaming job.
+Updates an existing function under an existing streaming job.
+This can be used to partially update (ie.
+update one or two properties) a function without affecting the rest the job or function definition.
 
 ## SYNTAX
 
-### CreateExpanded (Default)
+### UpdateExpanded (Default)
 ```
-New-AzStreamAnalyticsFunction -JobName <String> -Name <String> -ResourceGroupName <String>
- [-SubscriptionId <String>] [-IfMatch <String>] [-IfNoneMatch <String>] [-BindingType <String>]
- [-Input <IFunctionInput[]>] [-OutputDataType <String>] [-PropertiesType <String>]
- [-DefaultProfile <PSObject>] [-Confirm] [-WhatIf] [<CommonParameters>]
-```
-
-### Create
-```
-New-AzStreamAnalyticsFunction -JobName <String> -Name <String> -ResourceGroupName <String>
- -Function <IFunction> [-SubscriptionId <String>] [-IfMatch <String>] [-IfNoneMatch <String>]
- [-DefaultProfile <PSObject>] [-Confirm] [-WhatIf] [<CommonParameters>]
-```
-
-### CreateViaIdentity
-```
-New-AzStreamAnalyticsFunction -InputObject <IStreamAnalyticsIdentity> -Function <IFunction>
- [-IfMatch <String>] [-IfNoneMatch <String>] [-DefaultProfile <PSObject>] [-Confirm] [-WhatIf]
+Update-AzStreamAnalyticsFunction -JobName <String> -Name <String> -ResourceGroupName <String>
+ [-SubscriptionId <String>] [-IfMatch <String>] [-BindingType <String>] [-Input <IFunctionInput[]>]
+ [-OutputDataType <String>] [-PropertiesType <String>] [-DefaultProfile <PSObject>] [-Confirm] [-WhatIf]
  [<CommonParameters>]
 ```
 
-### CreateViaIdentityExpanded
+### Update
 ```
-New-AzStreamAnalyticsFunction -InputObject <IStreamAnalyticsIdentity> [-IfMatch <String>]
- [-IfNoneMatch <String>] [-BindingType <String>] [-Input <IFunctionInput[]>] [-OutputDataType <String>]
- [-PropertiesType <String>] [-DefaultProfile <PSObject>] [-Confirm] [-WhatIf] [<CommonParameters>]
+Update-AzStreamAnalyticsFunction -JobName <String> -Name <String> -ResourceGroupName <String>
+ -Function <IFunction> [-SubscriptionId <String>] [-IfMatch <String>] [-DefaultProfile <PSObject>] [-Confirm]
+ [-WhatIf] [<CommonParameters>]
+```
+
+### UpdateViaIdentity
+```
+Update-AzStreamAnalyticsFunction -InputObject <IStreamAnalyticsIdentity> -Function <IFunction>
+ [-IfMatch <String>] [-DefaultProfile <PSObject>] [-Confirm] [-WhatIf] [<CommonParameters>]
+```
+
+### UpdateViaIdentityExpanded
+```
+Update-AzStreamAnalyticsFunction -InputObject <IStreamAnalyticsIdentity> [-IfMatch <String>]
+ [-BindingType <String>] [-Input <IFunctionInput[]>] [-OutputDataType <String>] [-PropertiesType <String>]
+ [-DefaultProfile <PSObject>] [-Confirm] [-WhatIf] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Creates a function or replaces an already existing function under an existing streaming job.
+Updates an existing function under an existing streaming job.
+This can be used to partially update (ie.
+update one or two properties) a function without affecting the rest the job or function definition.
 
 ## EXAMPLES
 
@@ -71,7 +74,7 @@ Indicates the function binding type.
 
 ```yaml
 Type: System.String
-Parameter Sets: CreateExpanded, CreateViaIdentityExpanded
+Parameter Sets: UpdateExpanded, UpdateViaIdentityExpanded
 Aliases:
 
 Required: False
@@ -103,7 +106,7 @@ To construct, see NOTES section for FUNCTION properties and create a hash table.
 
 ```yaml
 Type: Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.Api20170401Preview.IFunction
-Parameter Sets: Create, CreateViaIdentity
+Parameter Sets: Update, UpdateViaIdentity
 Aliases:
 
 Required: True
@@ -130,29 +133,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -IfNoneMatch
-Set to '*' to allow a new function to be created, but to prevent updating an existing function.
-Other values will result in a 412 Pre-condition Failed response.
-
-```yaml
-Type: System.String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Input
 .
 To construct, see NOTES section for INPUT properties and create a hash table.
 
 ```yaml
 Type: Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.Api20170401Preview.IFunctionInput[]
-Parameter Sets: CreateExpanded, CreateViaIdentityExpanded
+Parameter Sets: UpdateExpanded, UpdateViaIdentityExpanded
 Aliases:
 
 Required: False
@@ -168,7 +155,7 @@ To construct, see NOTES section for INPUTOBJECT properties and create a hash tab
 
 ```yaml
 Type: Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.IStreamAnalyticsIdentity
-Parameter Sets: CreateViaIdentity, CreateViaIdentityExpanded
+Parameter Sets: UpdateViaIdentity, UpdateViaIdentityExpanded
 Aliases:
 
 Required: True
@@ -183,7 +170,7 @@ The name of the streaming job.
 
 ```yaml
 Type: System.String
-Parameter Sets: Create, CreateExpanded
+Parameter Sets: Update, UpdateExpanded
 Aliases:
 
 Required: True
@@ -198,7 +185,7 @@ The name of the function.
 
 ```yaml
 Type: System.String
-Parameter Sets: Create, CreateExpanded
+Parameter Sets: Update, UpdateExpanded
 Aliases: FunctionName
 
 Required: True
@@ -214,7 +201,7 @@ A list of valid Azure Stream Analytics data types are described at https://msdn.
 
 ```yaml
 Type: System.String
-Parameter Sets: CreateExpanded, CreateViaIdentityExpanded
+Parameter Sets: UpdateExpanded, UpdateViaIdentityExpanded
 Aliases:
 
 Required: False
@@ -229,7 +216,7 @@ Indicates the type of function.
 
 ```yaml
 Type: System.String
-Parameter Sets: CreateExpanded, CreateViaIdentityExpanded
+Parameter Sets: UpdateExpanded, UpdateViaIdentityExpanded
 Aliases:
 
 Required: False
@@ -245,7 +232,7 @@ The name is case insensitive.
 
 ```yaml
 Type: System.String
-Parameter Sets: Create, CreateExpanded
+Parameter Sets: Update, UpdateExpanded
 Aliases:
 
 Required: True
@@ -260,7 +247,7 @@ The ID of the target subscription.
 
 ```yaml
 Type: System.String
-Parameter Sets: Create, CreateExpanded
+Parameter Sets: Update, UpdateExpanded
 Aliases:
 
 Required: False

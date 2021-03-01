@@ -1,57 +1,79 @@
-﻿---
-external help file: Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.dll-Help.xml
+---
+external help file:
 Module Name: Az.StreamAnalytics
-ms.assetid: 43B2A4FD-DA74-403A-89D0-40FE9A3E5A7E
-online version: https://docs.microsoft.com/en-us/powershell/module/az.streamanalytics/new-azstreamanalyticsoutput
+online version: https://docs.microsoft.com/powershell/module/az.streamanalytics/new-azstreamanalyticsoutput
 schema: 2.0.0
 ---
 
 # New-AzStreamAnalyticsOutput
 
 ## SYNOPSIS
-Creates or updates outputs for a Stream Analytics job.
+Creates an output or replaces an already existing output under an existing streaming job.
 
 ## SYNTAX
 
+### CreateExpanded (Default)
 ```
-New-AzStreamAnalyticsOutput [-JobName] <String> [[-Name] <String>] [-File] <String> [-Force]
- [-ResourceGroupName] <String> [-DefaultProfile <IAzureContextContainer>] [-WhatIf] [-Confirm]
+New-AzStreamAnalyticsOutput -JobName <String> -Name <String> -ResourceGroupName <String>
+ [-SubscriptionId <String>] [-IfMatch <String>] [-IfNoneMatch <String>] [-DatasourceType <String>]
+ [-SerializationType <EventSerializationType>] [-SizeWindow <Single>] [-TimeWindow <String>]
+ [-DefaultProfile <PSObject>] [-Confirm] [-WhatIf] [<CommonParameters>]
+```
+
+### Create
+```
+New-AzStreamAnalyticsOutput -JobName <String> -Name <String> -ResourceGroupName <String> -Output <IOutput>
+ [-SubscriptionId <String>] [-IfMatch <String>] [-IfNoneMatch <String>] [-DefaultProfile <PSObject>]
+ [-Confirm] [-WhatIf] [<CommonParameters>]
+```
+
+### CreateViaIdentity
+```
+New-AzStreamAnalyticsOutput -InputObject <IStreamAnalyticsIdentity> -Output <IOutput> [-IfMatch <String>]
+ [-IfNoneMatch <String>] [-DefaultProfile <PSObject>] [-Confirm] [-WhatIf] [<CommonParameters>]
+```
+
+### CreateViaIdentityExpanded
+```
+New-AzStreamAnalyticsOutput -InputObject <IStreamAnalyticsIdentity> [-IfMatch <String>]
+ [-IfNoneMatch <String>] [-DatasourceType <String>] [-SerializationType <EventSerializationType>]
+ [-SizeWindow <Single>] [-TimeWindow <String>] [-DefaultProfile <PSObject>] [-Confirm] [-WhatIf]
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-The **New-AzStreamAnalyticsOutput** cmdlet creates an output within a Stream Analytics job or updates an existing output.
-The name of the output can be specified in the .JSON file or on the command line.
-If both are specified, the name on command line must match the name in the file.
-If you specify an output that already exists and do not specify the *Force* parameter, the cmdlet will ask whether or not to replace the existing output.
-If you specify the *Force* parameter and specify an existing output name, the output will be replaced without confirmation.
+Creates an output or replaces an already existing output under an existing streaming job.
 
 ## EXAMPLES
 
-### Example 1: Add an output to a job
+### Example 1: {{ Add title here }}
 ```powershell
-PS C:\>New-AzStreamAnalyticsOutput -ResourceGroupName "StreamAnalytics-Default-West-US" -File "C:\Output.json" -JobName "StreamingJob" -Name "Output"
+PS C:\> {{ Add code here }}
+
+{{ Add output here }}
 ```
 
-This command creates a new output called Output in the job called StreamingJob.
-If an existing output with this name is already defined, the cmdlet will ask whether or not to replace it.
+{{ Add description here }}
 
-### Example 2: Replace a job output definition
+### Example 2: {{ Add title here }}
 ```powershell
-PS C:\>New-AzStreamAnalyticsOutput -ResourceGroupName "StreamAnalytics-Default-West-US" -File "C:\Output.json" -JobName "StreamingJob" -Name "Output" -Force
+PS C:\> {{ Add code here }}
+
+{{ Add output here }}
 ```
 
-This command replaces the definition for Output in the job called StreamingJob without confirmation.
+{{ Add description here }}
 
 ## PARAMETERS
 
-### -DefaultProfile
-The credentials, account, tenant, and subscription used for communication with azure.
+### -DatasourceType
+Indicates the type of data source output will be written to.
+Required on PUT (CreateOrReplace) requests.
 
 ```yaml
-Type: Microsoft.Azure.Commands.Common.Authentication.Abstractions.Core.IAzureContextContainer
-Parameter Sets: (All)
-Aliases: AzContext, AzureRmContext, AzureCredential
+Type: System.String
+Parameter Sets: CreateExpanded, CreateViaIdentityExpanded
+Aliases:
 
 Required: False
 Position: Named
@@ -60,26 +82,44 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -File
-Specifies the path to a JSON file that contains the JSON representation of the Azure Stream Analytics output to create.
+### -DefaultProfile
+The credentials, account, tenant, and subscription used for communication with Azure.
+
+```yaml
+Type: System.Management.Automation.PSObject
+Parameter Sets: (All)
+Aliases: AzureRMContext, AzureCredential
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IfMatch
+The ETag of the output.
+Omit this value to always overwrite the current output.
+Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes.
 
 ```yaml
 Type: System.String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
-Position: 3
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Force
-Forces the command to run without asking for user confirmation.
+### -IfNoneMatch
+Set to '*' to allow a new output to be created, but to prevent updating an existing output.
+Other values will result in a 412 Pre-condition Failed response.
 
 ```yaml
-Type: System.Management.Automation.SwitchParameter
+Type: System.String
 Parameter Sets: (All)
 Aliases:
 
@@ -87,51 +127,146 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -InputObject
+Identity Parameter
+To construct, see NOTES section for INPUTOBJECT properties and create a hash table.
+
+```yaml
+Type: Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.IStreamAnalyticsIdentity
+Parameter Sets: CreateViaIdentity, CreateViaIdentityExpanded
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
 ### -JobName
-Specifies the name of the Azure Stream Analytics job under which to create the Azure Stream Analytics output.
+The name of the streaming job.
 
 ```yaml
 Type: System.String
-Parameter Sets: (All)
+Parameter Sets: Create, CreateExpanded
 Aliases:
 
 Required: True
-Position: 1
+Position: Named
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Name
-Specifies the name of the Azure Stream Analytics output to create.
+The name of the output.
 
 ```yaml
 Type: System.String
-Parameter Sets: (All)
+Parameter Sets: Create, CreateExpanded
+Aliases: OutputName
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Output
+An output object, containing all information associated with the named output.
+All outputs are contained under a streaming job.
+To construct, see NOTES section for OUTPUT properties and create a hash table.
+
+```yaml
+Type: Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.Api20170401Preview.IOutput
+Parameter Sets: Create, CreateViaIdentity
 Aliases:
 
-Required: False
-Position: 2
+Required: True
+Position: Named
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-Specifies the name of the resource group under which to create the Azure Stream Analytics output.
+The name of the resource group.
+The name is case insensitive.
 
 ```yaml
 Type: System.String
-Parameter Sets: (All)
+Parameter Sets: Create, CreateExpanded
 Aliases:
 
 Required: True
-Position: 0
+Position: Named
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SerializationType
+Indicates the type of serialization that the input or output uses.
+Required on PUT (CreateOrReplace) requests.
+
+```yaml
+Type: Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Support.EventSerializationType
+Parameter Sets: CreateExpanded, CreateViaIdentityExpanded
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SizeWindow
+.
+
+```yaml
+Type: System.Single
+Parameter Sets: CreateExpanded, CreateViaIdentityExpanded
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SubscriptionId
+The ID of the target subscription.
+
+```yaml
+Type: System.String
+Parameter Sets: Create, CreateExpanded
+Aliases:
+
+Required: False
+Position: Named
+Default value: (Get-AzContext).Subscription.Id
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TimeWindow
+.
+
+```yaml
+Type: System.String
+Parameter Sets: CreateExpanded, CreateViaIdentityExpanded
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -145,7 +280,7 @@ Aliases: cf
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -161,30 +296,51 @@ Aliases: wi
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
-### System.String
+### Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.Api20170401Preview.IOutput
+
+### Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.IStreamAnalyticsIdentity
 
 ## OUTPUTS
 
-### Microsoft.Azure.Commands.StreamAnalytics.Models.PSOutput
+### Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.Api20170401Preview.IOutput
 
 ## NOTES
 
+ALIASES
+
+COMPLEX PARAMETER PROPERTIES
+
+To create the parameters described below, construct a hash table containing the appropriate properties. For information on hash tables, run Get-Help about_Hash_Tables.
+
+
+INPUTOBJECT <IStreamAnalyticsIdentity>: Identity Parameter
+  - `[ClusterName <String>]`: The name of the cluster.
+  - `[FunctionName <String>]`: The name of the function.
+  - `[Id <String>]`: Resource identity path
+  - `[InputName <String>]`: The name of the input.
+  - `[JobName <String>]`: The name of the streaming job.
+  - `[Location <String>]`: The region in which to retrieve the subscription's quota information. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/
+  - `[OutputName <String>]`: The name of the output.
+  - `[ResourceGroupName <String>]`: The name of the resource group. The name is case insensitive.
+  - `[SubscriptionId <String>]`: The ID of the target subscription.
+  - `[TransformationName <String>]`: The name of the transformation.
+
+OUTPUT <IOutput>: An output object, containing all information associated with the named output. All outputs are contained under a streaming job.
+  - `[DatasourceType <String>]`: Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests.
+  - `[ETag <String>]`: 
+  - `[SerializationType <EventSerializationType?>]`: Indicates the type of serialization that the input or output uses. Required on PUT (CreateOrReplace) requests.
+  - `[SizeWindow <Single?>]`: 
+  - `[TimeWindow <String>]`: 
+
 ## RELATED LINKS
-
-[Get-AzStreamAnalyticsOutput](./Get-AzStreamAnalyticsOutput.md)
-
-[Remove-AzStreamAnalyticsOutput](./Remove-AzStreamAnalyticsOutput.md)
-
-[Test-AzStreamAnalyticsOutput](./Test-AzStreamAnalyticsOutput.md)
-
 

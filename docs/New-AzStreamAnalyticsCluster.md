@@ -1,83 +1,92 @@
 ---
 external help file:
 Module Name: Az.StreamAnalytics
-online version: https://docs.microsoft.com/powershell/module/az.streamanalytics/new-azstreamanalyticsinput
+online version: https://docs.microsoft.com/powershell/module/az.streamanalytics/new-azstreamanalyticscluster
 schema: 2.0.0
 ---
 
-# New-AzStreamAnalyticsInput
+# New-AzStreamAnalyticsCluster
 
 ## SYNOPSIS
-Creates an input or replaces an already existing input under an existing streaming job.
+Creates a Stream Analytics Cluster or replaces an already existing cluster.
 
 ## SYNTAX
 
 ### CreateExpanded (Default)
 ```
-New-AzStreamAnalyticsInput -JobName <String> -Name <String> -ResourceGroupName <String>
- [-SubscriptionId <String>] [-IfMatch <String>] [-IfNoneMatch <String>] [-CompressionType <String>]
- [-PartitionKey <String>] [-PropertiesType <String>] [-SerializationType <EventSerializationType>]
- [-DefaultProfile <PSObject>] [-Confirm] [-WhatIf] [<CommonParameters>]
+New-AzStreamAnalyticsCluster -Name <String> -ResourceGroupName <String> [-SubscriptionId <String>]
+ [-IfMatch <String>] [-IfNoneMatch <String>] [-Location <String>] [-SkuCapacity <Int32>]
+ [-SkuName <ClusterSkuName>] [-Tag <Hashtable>] [-DefaultProfile <PSObject>] [-AsJob] [-NoWait] [-Confirm]
+ [-WhatIf] [<CommonParameters>]
 ```
 
 ### Create
 ```
-New-AzStreamAnalyticsInput -JobName <String> -Name <String> -ResourceGroupName <String> -Input <IInput>
- [-SubscriptionId <String>] [-IfMatch <String>] [-IfNoneMatch <String>] [-DefaultProfile <PSObject>]
- [-Confirm] [-WhatIf] [<CommonParameters>]
+New-AzStreamAnalyticsCluster -Name <String> -ResourceGroupName <String> -Cluster <ICluster>
+ [-SubscriptionId <String>] [-IfMatch <String>] [-IfNoneMatch <String>] [-DefaultProfile <PSObject>] [-AsJob]
+ [-NoWait] [-Confirm] [-WhatIf] [<CommonParameters>]
 ```
 
 ### CreateViaIdentity
 ```
-New-AzStreamAnalyticsInput -InputObject <IStreamAnalyticsIdentity> -Input <IInput> [-IfMatch <String>]
- [-IfNoneMatch <String>] [-DefaultProfile <PSObject>] [-Confirm] [-WhatIf] [<CommonParameters>]
+New-AzStreamAnalyticsCluster -InputObject <IStreamAnalyticsIdentity> -Cluster <ICluster> [-IfMatch <String>]
+ [-IfNoneMatch <String>] [-DefaultProfile <PSObject>] [-AsJob] [-NoWait] [-Confirm] [-WhatIf]
+ [<CommonParameters>]
 ```
 
 ### CreateViaIdentityExpanded
 ```
-New-AzStreamAnalyticsInput -InputObject <IStreamAnalyticsIdentity> [-IfMatch <String>] [-IfNoneMatch <String>]
- [-CompressionType <String>] [-PartitionKey <String>] [-PropertiesType <String>]
- [-SerializationType <EventSerializationType>] [-DefaultProfile <PSObject>] [-Confirm] [-WhatIf]
- [<CommonParameters>]
+New-AzStreamAnalyticsCluster -InputObject <IStreamAnalyticsIdentity> [-IfMatch <String>]
+ [-IfNoneMatch <String>] [-Location <String>] [-SkuCapacity <Int32>] [-SkuName <ClusterSkuName>]
+ [-Tag <Hashtable>] [-DefaultProfile <PSObject>] [-AsJob] [-NoWait] [-Confirm] [-WhatIf] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Creates an input or replaces an already existing input under an existing streaming job.
+Creates a Stream Analytics Cluster or replaces an already existing cluster.
 
 ## EXAMPLES
 
-### Example 1: {{ Add title here }}
+### Example 1: Create a new stream analytics cluster
 ```powershell
-PS C:\> {{ Add code here }}
+PS C:\> New-AzStreamAnalyticsCluster -ResourceGroupName pwshaz-rg-test -Name sac-ps-test01 -Location "West Central US" -SkuName "Default" -SkuCapacity 36
 
-{{ Add output here }}
+Location        Name          Type                               Etag
+--------        ----          ----                               ----
+West Central US sac-ps-test01 Microsoft.StreamAnalytics/clusters
 ```
 
-{{ Add description here }}
-
-### Example 2: {{ Add title here }}
-```powershell
-PS C:\> {{ Add code here }}
-
-{{ Add output here }}
-```
-
-{{ Add description here }}
+This command creates a new stream analytics cluster.
 
 ## PARAMETERS
 
-### -CompressionType
-.
+### -AsJob
+Run the command as a job
 
 ```yaml
-Type: System.String
-Parameter Sets: CreateExpanded, CreateViaIdentityExpanded
+Type: System.Management.Automation.SwitchParameter
+Parameter Sets: (All)
 Aliases:
 
 Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Cluster
+A Stream Analytics Cluster object
+To construct, see NOTES section for CLUSTER properties and create a hash table.
+
+```yaml
+Type: Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.Api20200301Preview.ICluster
+Parameter Sets: Create, CreateViaIdentity
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
@@ -97,8 +106,8 @@ Accept wildcard characters: False
 ```
 
 ### -IfMatch
-The ETag of the input.
-Omit this value to always overwrite the current input.
+The ETag of the resource.
+Omit this value to always overwrite the current record set.
 Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes.
 
 ```yaml
@@ -114,7 +123,7 @@ Accept wildcard characters: False
 ```
 
 ### -IfNoneMatch
-Set to '*' to allow a new input to be created, but to prevent updating an existing input.
+Set to '*' to allow a new resource to be created, but to prevent updating an existing record set.
 Other values will result in a 412 Pre-condition Failed response.
 
 ```yaml
@@ -126,23 +135,6 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Input
-An input object, containing all information associated with the named input.
-All inputs are contained under a streaming job.
-To construct, see NOTES section for INPUT properties and create a hash table.
-
-```yaml
-Type: Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.Api20170401Preview.IInput
-Parameter Sets: Create, CreateViaIdentity
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
@@ -162,38 +154,8 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -JobName
-The name of the streaming job.
-
-```yaml
-Type: System.String
-Parameter Sets: Create, CreateExpanded
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Name
-The name of the input.
-
-```yaml
-Type: System.String
-Parameter Sets: Create, CreateExpanded
-Aliases: InputName
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -PartitionKey
-partitionKey Describes a key in the input data which is used for partitioning the input data
+### -Location
+The geo-location where the resource lives
 
 ```yaml
 Type: System.String
@@ -207,13 +169,27 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -PropertiesType
-Indicates whether the input is a source of reference data or stream data.
-Required on PUT (CreateOrReplace) requests.
+### -Name
+The name of the cluster.
 
 ```yaml
 Type: System.String
-Parameter Sets: CreateExpanded, CreateViaIdentityExpanded
+Parameter Sets: Create, CreateExpanded
+Aliases: ClusterName
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -NoWait
+Run the command asynchronously
+
+```yaml
+Type: System.Management.Automation.SwitchParameter
+Parameter Sets: (All)
 Aliases:
 
 Required: False
@@ -239,12 +215,29 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -SerializationType
-Indicates the type of serialization that the input or output uses.
-Required on PUT (CreateOrReplace) requests.
+### -SkuCapacity
+Denotes the number of streaming units the cluster can support.
+Valid values for this property are multiples of 36 with a minimum value of 36 and maximum value of 216.
+Required on PUT (CreateOrUpdate) requests.
 
 ```yaml
-Type: Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Support.EventSerializationType
+Type: System.Int32
+Parameter Sets: CreateExpanded, CreateViaIdentityExpanded
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SkuName
+Specifies the SKU name of the cluster.
+Required on PUT (CreateOrUpdate) requests.
+
+```yaml
+Type: Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Support.ClusterSkuName
 Parameter Sets: CreateExpanded, CreateViaIdentityExpanded
 Aliases:
 
@@ -266,6 +259,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: (Get-AzContext).Subscription.Id
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Tag
+Resource tags.
+
+```yaml
+Type: System.Collections.Hashtable
+Parameter Sets: CreateExpanded, CreateViaIdentityExpanded
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -306,13 +314,13 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.Api20170401Preview.IInput
+### Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.Api20200301Preview.ICluster
 
 ### Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.IStreamAnalyticsIdentity
 
 ## OUTPUTS
 
-### Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.Api20170401Preview.IInput
+### Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.Api20200301Preview.ICluster
 
 ## NOTES
 
@@ -323,12 +331,12 @@ COMPLEX PARAMETER PROPERTIES
 To create the parameters described below, construct a hash table containing the appropriate properties. For information on hash tables, run Get-Help about_Hash_Tables.
 
 
-INPUT <IInput>: An input object, containing all information associated with the named input. All inputs are contained under a streaming job.
-  - `[CompressionType <String>]`: 
-  - `[ETag <String>]`: 
-  - `[PartitionKey <String>]`: partitionKey Describes a key in the input data which is used for partitioning the input data
-  - `[PropertiesType <String>]`: Indicates whether the input is a source of reference data or stream data. Required on PUT (CreateOrReplace) requests.
-  - `[SerializationType <EventSerializationType?>]`: Indicates the type of serialization that the input or output uses. Required on PUT (CreateOrReplace) requests.
+CLUSTER <ICluster>: A Stream Analytics Cluster object
+  - `[Location <String>]`: The geo-location where the resource lives
+  - `[Tag <ITrackedResourceTags>]`: Resource tags.
+    - `[(Any) <String>]`: This indicates any property can be added to this object.
+  - `[SkuCapacity <Int32?>]`: Denotes the number of streaming units the cluster can support. Valid values for this property are multiples of 36 with a minimum value of 36 and maximum value of 216. Required on PUT (CreateOrUpdate) requests.
+  - `[SkuName <ClusterSkuName?>]`: Specifies the SKU name of the cluster. Required on PUT (CreateOrUpdate) requests.
 
 INPUTOBJECT <IStreamAnalyticsIdentity>: Identity Parameter
   - `[ClusterName <String>]`: The name of the cluster.

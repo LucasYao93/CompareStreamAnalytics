@@ -1,31 +1,51 @@
 ---
 external help file:
 Module Name: Az.StreamAnalytics
-online version: https://docs.microsoft.com/powershell/module/az.streamanalytics/remove-azstreamanalyticsinput
+online version: https://docs.microsoft.com/powershell/module/az.streamanalytics/update-azstreamanalyticstransformation
 schema: 2.0.0
 ---
 
-# Remove-AzStreamAnalyticsInput
+# Update-AzStreamAnalyticsTransformation
 
 ## SYNOPSIS
-Deletes an input from the streaming job.
+Updates an existing transformation under an existing streaming job.
+This can be used to partially update (ie.
+update one or two properties) a transformation without affecting the rest the job or transformation definition.
 
 ## SYNTAX
 
-### Delete (Default)
+### UpdateExpanded (Default)
 ```
-Remove-AzStreamAnalyticsInput -JobName <String> -Name <String> -ResourceGroupName <String>
- [-SubscriptionId <String>] [-DefaultProfile <PSObject>] [-PassThru] [-Confirm] [-WhatIf] [<CommonParameters>]
+Update-AzStreamAnalyticsTransformation -JobName <String> -Name <String> -ResourceGroupName <String>
+ [-SubscriptionId <String>] [-IfMatch <String>] [-Query <String>] [-StreamingUnit <Int32>]
+ [-DefaultProfile <PSObject>] [-Confirm] [-WhatIf] [<CommonParameters>]
 ```
 
-### DeleteViaIdentity
+### Update
 ```
-Remove-AzStreamAnalyticsInput -InputObject <IStreamAnalyticsIdentity> [-DefaultProfile <PSObject>] [-PassThru]
+Update-AzStreamAnalyticsTransformation -JobName <String> -Name <String> -ResourceGroupName <String>
+ -Transformation <ITransformation> [-SubscriptionId <String>] [-IfMatch <String>] [-DefaultProfile <PSObject>]
  [-Confirm] [-WhatIf] [<CommonParameters>]
 ```
 
+### UpdateViaIdentity
+```
+Update-AzStreamAnalyticsTransformation -InputObject <IStreamAnalyticsIdentity>
+ -Transformation <ITransformation> [-IfMatch <String>] [-DefaultProfile <PSObject>] [-Confirm] [-WhatIf]
+ [<CommonParameters>]
+```
+
+### UpdateViaIdentityExpanded
+```
+Update-AzStreamAnalyticsTransformation -InputObject <IStreamAnalyticsIdentity> [-IfMatch <String>]
+ [-Query <String>] [-StreamingUnit <Int32>] [-DefaultProfile <PSObject>] [-Confirm] [-WhatIf]
+ [<CommonParameters>]
+```
+
 ## DESCRIPTION
-Deletes an input from the streaming job.
+Updates an existing transformation under an existing streaming job.
+This can be used to partially update (ie.
+update one or two properties) a transformation without affecting the rest the job or transformation definition.
 
 ## EXAMPLES
 
@@ -64,13 +84,30 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -IfMatch
+The ETag of the transformation.
+Omit this value to always overwrite the current transformation.
+Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes.
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -InputObject
 Identity Parameter
 To construct, see NOTES section for INPUTOBJECT properties and create a hash table.
 
 ```yaml
 Type: Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.IStreamAnalyticsIdentity
-Parameter Sets: DeleteViaIdentity
+Parameter Sets: UpdateViaIdentity, UpdateViaIdentityExpanded
 Aliases:
 
 Required: True
@@ -85,7 +122,7 @@ The name of the streaming job.
 
 ```yaml
 Type: System.String
-Parameter Sets: Delete
+Parameter Sets: Update, UpdateExpanded
 Aliases:
 
 Required: True
@@ -96,12 +133,12 @@ Accept wildcard characters: False
 ```
 
 ### -Name
-The name of the input.
+The name of the transformation.
 
 ```yaml
 Type: System.String
-Parameter Sets: Delete
-Aliases: InputName
+Parameter Sets: Update, UpdateExpanded
+Aliases: TransformationName
 
 Required: True
 Position: Named
@@ -110,12 +147,14 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -PassThru
-Returns true when the command succeeds
+### -Query
+Specifies the query that will be run in the streaming job.
+You can learn more about the Stream Analytics Query Language (SAQL) here: https://msdn.microsoft.com/library/azure/dn834998 .
+Required on PUT (CreateOrReplace) requests.
 
 ```yaml
-Type: System.Management.Automation.SwitchParameter
-Parameter Sets: (All)
+Type: System.String
+Parameter Sets: UpdateExpanded, UpdateViaIdentityExpanded
 Aliases:
 
 Required: False
@@ -131,10 +170,25 @@ The name is case insensitive.
 
 ```yaml
 Type: System.String
-Parameter Sets: Delete
+Parameter Sets: Update, UpdateExpanded
 Aliases:
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -StreamingUnit
+Specifies the number of streaming units that the streaming job uses.
+
+```yaml
+Type: System.Int32
+Parameter Sets: UpdateExpanded, UpdateViaIdentityExpanded
+Aliases:
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -146,13 +200,30 @@ The ID of the target subscription.
 
 ```yaml
 Type: System.String
-Parameter Sets: Delete
+Parameter Sets: Update, UpdateExpanded
 Aliases:
 
 Required: False
 Position: Named
 Default value: (Get-AzContext).Subscription.Id
 Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Transformation
+A transformation object, containing all information associated with the named transformation.
+All transformations are contained under a streaming job.
+To construct, see NOTES section for TRANSFORMATION properties and create a hash table.
+
+```yaml
+Type: Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.Api20170401Preview.ITransformation
+Parameter Sets: Update, UpdateViaIdentity
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
@@ -192,11 +263,13 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
+### Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.Api20170401Preview.ITransformation
+
 ### Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.IStreamAnalyticsIdentity
 
 ## OUTPUTS
 
-### System.Boolean
+### Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.Api20170401Preview.ITransformation
 
 ## NOTES
 
@@ -218,6 +291,11 @@ INPUTOBJECT <IStreamAnalyticsIdentity>: Identity Parameter
   - `[ResourceGroupName <String>]`: The name of the resource group. The name is case insensitive.
   - `[SubscriptionId <String>]`: The ID of the target subscription.
   - `[TransformationName <String>]`: The name of the transformation.
+
+TRANSFORMATION <ITransformation>: A transformation object, containing all information associated with the named transformation. All transformations are contained under a streaming job.
+  - `[ETag <String>]`: 
+  - `[Query <String>]`: Specifies the query that will be run in the streaming job. You can learn more about the Stream Analytics Query Language (SAQL) here: https://msdn.microsoft.com/library/azure/dn834998 . Required on PUT (CreateOrReplace) requests.
+  - `[StreamingUnit <Int32?>]`: Specifies the number of streaming units that the streaming job uses.
 
 ## RELATED LINKS
 
