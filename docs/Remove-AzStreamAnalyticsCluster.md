@@ -1,53 +1,51 @@
 ---
 external help file:
 Module Name: Az.StreamAnalytics
-online version: https://docs.microsoft.com/powershell/module/az.streamanalytics/stop-azstreamanalyticsjob
+online version: https://docs.microsoft.com/powershell/module/az.streamanalytics/remove-azstreamanalyticscluster
 schema: 2.0.0
 ---
 
-# Stop-AzStreamAnalyticsJob
+# Remove-AzStreamAnalyticsCluster
 
 ## SYNOPSIS
-Stops a running streaming job.
-This will cause a running streaming job to stop processing input events and producing output.
+Deletes the specified cluster.
 
 ## SYNTAX
 
-### Stop (Default)
+### Delete (Default)
 ```
-Stop-AzStreamAnalyticsJob -Name <String> -ResourceGroupName <String> [-SubscriptionId <String>]
+Remove-AzStreamAnalyticsCluster -Name <String> -ResourceGroupName <String> [-SubscriptionId <String>]
  [-DefaultProfile <PSObject>] [-AsJob] [-NoWait] [-PassThru] [-Confirm] [-WhatIf] [<CommonParameters>]
 ```
 
-### StopViaIdentity
+### DeleteViaIdentity
 ```
-Stop-AzStreamAnalyticsJob -InputObject <IStreamAnalyticsIdentity> [-DefaultProfile <PSObject>] [-AsJob]
+Remove-AzStreamAnalyticsCluster -InputObject <IStreamAnalyticsIdentity> [-DefaultProfile <PSObject>] [-AsJob]
  [-NoWait] [-PassThru] [-Confirm] [-WhatIf] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Stops a running streaming job.
-This will cause a running streaming job to stop processing input events and producing output.
+Deletes the specified cluster.
 
 ## EXAMPLES
 
-### Example 1: {{ Add title here }}
+### Example 1: Remove a stream analytics by name
 ```powershell
-PS C:\> {{ Add code here }}
+PS C:\> Remove-AzStreamAnalyticsCluster -ResourceGroupName pwshaz-rg-test -Name sac-m-test02
 
-{{ Add output here }}
 ```
 
-{{ Add description here }}
+This command removes a stream analytics by name.
+**Please remove all jobs of the stream analytics cluster brefore invoke Remove-AzStreamAnalyticsCluster.**
 
-### Example 2: {{ Add title here }}
+### Example 2: Remove a stream analytics by pipeline
 ```powershell
-PS C:\> {{ Add code here }}
+PS C:\> Get-AzStreamAnalyticsCluster -ResourceGroupName pwshaz-rg-test -Name sac-m-test01 | Remove-AzStreamAnalyticsCluster
 
-{{ Add output here }}
 ```
 
-{{ Add description here }}
+This command removes a stream analytics by pipeline.
+**Please remove all jobs of the stream analytics cluster brefore invoke Remove-AzStreamAnalyticsCluster.**
 
 ## PARAMETERS
 
@@ -87,7 +85,7 @@ To construct, see NOTES section for INPUTOBJECT properties and create a hash tab
 
 ```yaml
 Type: Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.IStreamAnalyticsIdentity
-Parameter Sets: StopViaIdentity
+Parameter Sets: DeleteViaIdentity
 Aliases:
 
 Required: True
@@ -98,12 +96,12 @@ Accept wildcard characters: False
 ```
 
 ### -Name
-The name of the streaming job.
+The name of the cluster.
 
 ```yaml
 Type: System.String
-Parameter Sets: Stop
-Aliases:
+Parameter Sets: Delete
+Aliases: ClusterName
 
 Required: True
 Position: Named
@@ -148,7 +146,7 @@ The name is case insensitive.
 
 ```yaml
 Type: System.String
-Parameter Sets: Stop
+Parameter Sets: Delete
 Aliases:
 
 Required: True
@@ -163,7 +161,7 @@ The ID of the target subscription.
 
 ```yaml
 Type: System.String
-Parameter Sets: Stop
+Parameter Sets: Delete
 Aliases:
 
 Required: False

@@ -1,48 +1,51 @@
 ---
 external help file:
 Module Name: Az.StreamAnalytics
-online version: https://docs.microsoft.com/powershell/module/az.streamanalytics/new-azstreamanalyticsinput
+online version: https://docs.microsoft.com/powershell/module/az.streamanalytics/update-azstreamanalyticsoutput
 schema: 2.0.0
 ---
 
-# New-AzStreamAnalyticsInput
+# Update-AzStreamAnalyticsOutput
 
 ## SYNOPSIS
-Creates an input or replaces an already existing input under an existing streaming job.
+Updates an existing output under an existing streaming job.
+This can be used to partially update (ie.
+update one or two properties) an output without affecting the rest the job or output definition.
 
 ## SYNTAX
 
-### CreateExpanded (Default)
+### UpdateExpanded (Default)
 ```
-New-AzStreamAnalyticsInput -JobName <String> -Name <String> -ResourceGroupName <String>
- [-SubscriptionId <String>] [-IfMatch <String>] [-IfNoneMatch <String>] [-CompressionType <String>]
- [-PartitionKey <String>] [-PropertiesType <String>] [-SerializationType <EventSerializationType>]
+Update-AzStreamAnalyticsOutput -JobName <String> -Name <String> -ResourceGroupName <String>
+ [-SubscriptionId <String>] [-IfMatch <String>] [-DatasourceType <String>]
+ [-SerializationType <EventSerializationType>] [-SizeWindow <Single>] [-TimeWindow <String>]
  [-DefaultProfile <PSObject>] [-Confirm] [-WhatIf] [<CommonParameters>]
 ```
 
-### Create
+### Update
 ```
-New-AzStreamAnalyticsInput -JobName <String> -Name <String> -ResourceGroupName <String> -Input <IInput>
- [-SubscriptionId <String>] [-IfMatch <String>] [-IfNoneMatch <String>] [-DefaultProfile <PSObject>]
- [-Confirm] [-WhatIf] [<CommonParameters>]
-```
-
-### CreateViaIdentity
-```
-New-AzStreamAnalyticsInput -InputObject <IStreamAnalyticsIdentity> -Input <IInput> [-IfMatch <String>]
- [-IfNoneMatch <String>] [-DefaultProfile <PSObject>] [-Confirm] [-WhatIf] [<CommonParameters>]
-```
-
-### CreateViaIdentityExpanded
-```
-New-AzStreamAnalyticsInput -InputObject <IStreamAnalyticsIdentity> [-IfMatch <String>] [-IfNoneMatch <String>]
- [-CompressionType <String>] [-PartitionKey <String>] [-PropertiesType <String>]
- [-SerializationType <EventSerializationType>] [-DefaultProfile <PSObject>] [-Confirm] [-WhatIf]
+Update-AzStreamAnalyticsOutput -JobName <String> -Name <String> -ResourceGroupName <String> -Output <IOutput>
+ [-SubscriptionId <String>] [-IfMatch <String>] [-DefaultProfile <PSObject>] [-Confirm] [-WhatIf]
  [<CommonParameters>]
 ```
 
+### UpdateViaIdentity
+```
+Update-AzStreamAnalyticsOutput -InputObject <IStreamAnalyticsIdentity> -Output <IOutput> [-IfMatch <String>]
+ [-DefaultProfile <PSObject>] [-Confirm] [-WhatIf] [<CommonParameters>]
+```
+
+### UpdateViaIdentityExpanded
+```
+Update-AzStreamAnalyticsOutput -InputObject <IStreamAnalyticsIdentity> [-IfMatch <String>]
+ [-DatasourceType <String>] [-SerializationType <EventSerializationType>] [-SizeWindow <Single>]
+ [-TimeWindow <String>] [-DefaultProfile <PSObject>] [-Confirm] [-WhatIf] [<CommonParameters>]
+```
+
 ## DESCRIPTION
-Creates an input or replaces an already existing input under an existing streaming job.
+Updates an existing output under an existing streaming job.
+This can be used to partially update (ie.
+update one or two properties) an output without affecting the rest the job or output definition.
 
 ## EXAMPLES
 
@@ -66,12 +69,13 @@ PS C:\> {{ Add code here }}
 
 ## PARAMETERS
 
-### -CompressionType
-.
+### -DatasourceType
+Indicates the type of data source output will be written to.
+Required on PUT (CreateOrReplace) requests.
 
 ```yaml
 Type: System.String
-Parameter Sets: CreateExpanded, CreateViaIdentityExpanded
+Parameter Sets: UpdateExpanded, UpdateViaIdentityExpanded
 Aliases:
 
 Required: False
@@ -97,8 +101,8 @@ Accept wildcard characters: False
 ```
 
 ### -IfMatch
-The ETag of the input.
-Omit this value to always overwrite the current input.
+The ETag of the output.
+Omit this value to always overwrite the current output.
 Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes.
 
 ```yaml
@@ -113,46 +117,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -IfNoneMatch
-Set to '*' to allow a new input to be created, but to prevent updating an existing input.
-Other values will result in a 412 Pre-condition Failed response.
-
-```yaml
-Type: System.String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Input
-An input object, containing all information associated with the named input.
-All inputs are contained under a streaming job.
-To construct, see NOTES section for INPUT properties and create a hash table.
-
-```yaml
-Type: Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.Api20170401Preview.IInput
-Parameter Sets: Create, CreateViaIdentity
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
 ### -InputObject
 Identity Parameter
 To construct, see NOTES section for INPUTOBJECT properties and create a hash table.
 
 ```yaml
 Type: Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.IStreamAnalyticsIdentity
-Parameter Sets: CreateViaIdentity, CreateViaIdentityExpanded
+Parameter Sets: UpdateViaIdentity, UpdateViaIdentityExpanded
 Aliases:
 
 Required: True
@@ -167,7 +138,7 @@ The name of the streaming job.
 
 ```yaml
 Type: System.String
-Parameter Sets: Create, CreateExpanded
+Parameter Sets: Update, UpdateExpanded
 Aliases:
 
 Required: True
@@ -178,12 +149,12 @@ Accept wildcard characters: False
 ```
 
 ### -Name
-The name of the input.
+The name of the output.
 
 ```yaml
 Type: System.String
-Parameter Sets: Create, CreateExpanded
-Aliases: InputName
+Parameter Sets: Update, UpdateExpanded
+Aliases: OutputName
 
 Required: True
 Position: Named
@@ -192,34 +163,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -PartitionKey
-partitionKey Describes a key in the input data which is used for partitioning the input data
+### -Output
+An output object, containing all information associated with the named output.
+All outputs are contained under a streaming job.
+To construct, see NOTES section for OUTPUT properties and create a hash table.
 
 ```yaml
-Type: System.String
-Parameter Sets: CreateExpanded, CreateViaIdentityExpanded
+Type: Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.Api20170401Preview.IOutput
+Parameter Sets: Update, UpdateViaIdentity
 Aliases:
 
-Required: False
+Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -PropertiesType
-Indicates whether the input is a source of reference data or stream data.
-Required on PUT (CreateOrReplace) requests.
-
-```yaml
-Type: System.String
-Parameter Sets: CreateExpanded, CreateViaIdentityExpanded
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
@@ -229,7 +186,7 @@ The name is case insensitive.
 
 ```yaml
 Type: System.String
-Parameter Sets: Create, CreateExpanded
+Parameter Sets: Update, UpdateExpanded
 Aliases:
 
 Required: True
@@ -245,7 +202,22 @@ Required on PUT (CreateOrReplace) requests.
 
 ```yaml
 Type: Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Support.EventSerializationType
-Parameter Sets: CreateExpanded, CreateViaIdentityExpanded
+Parameter Sets: UpdateExpanded, UpdateViaIdentityExpanded
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SizeWindow
+.
+
+```yaml
+Type: System.Single
+Parameter Sets: UpdateExpanded, UpdateViaIdentityExpanded
 Aliases:
 
 Required: False
@@ -260,12 +232,27 @@ The ID of the target subscription.
 
 ```yaml
 Type: System.String
-Parameter Sets: Create, CreateExpanded
+Parameter Sets: Update, UpdateExpanded
 Aliases:
 
 Required: False
 Position: Named
 Default value: (Get-AzContext).Subscription.Id
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TimeWindow
+.
+
+```yaml
+Type: System.String
+Parameter Sets: UpdateExpanded, UpdateViaIdentityExpanded
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -306,13 +293,13 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.Api20170401Preview.IInput
+### Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.Api20170401Preview.IOutput
 
 ### Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.IStreamAnalyticsIdentity
 
 ## OUTPUTS
 
-### Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.Api20170401Preview.IInput
+### Microsoft.Azure.PowerShell.Cmdlets.StreamAnalytics.Models.Api20170401Preview.IOutput
 
 ## NOTES
 
@@ -322,13 +309,6 @@ COMPLEX PARAMETER PROPERTIES
 
 To create the parameters described below, construct a hash table containing the appropriate properties. For information on hash tables, run Get-Help about_Hash_Tables.
 
-
-INPUT <IInput>: An input object, containing all information associated with the named input. All inputs are contained under a streaming job.
-  - `[CompressionType <String>]`: 
-  - `[ETag <String>]`: 
-  - `[PartitionKey <String>]`: partitionKey Describes a key in the input data which is used for partitioning the input data
-  - `[PropertiesType <String>]`: Indicates whether the input is a source of reference data or stream data. Required on PUT (CreateOrReplace) requests.
-  - `[SerializationType <EventSerializationType?>]`: Indicates the type of serialization that the input or output uses. Required on PUT (CreateOrReplace) requests.
 
 INPUTOBJECT <IStreamAnalyticsIdentity>: Identity Parameter
   - `[ClusterName <String>]`: The name of the cluster.
@@ -341,6 +321,13 @@ INPUTOBJECT <IStreamAnalyticsIdentity>: Identity Parameter
   - `[ResourceGroupName <String>]`: The name of the resource group. The name is case insensitive.
   - `[SubscriptionId <String>]`: The ID of the target subscription.
   - `[TransformationName <String>]`: The name of the transformation.
+
+OUTPUT <IOutput>: An output object, containing all information associated with the named output. All outputs are contained under a streaming job.
+  - `[DatasourceType <String>]`: Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests.
+  - `[ETag <String>]`: 
+  - `[SerializationType <EventSerializationType?>]`: Indicates the type of serialization that the input or output uses. Required on PUT (CreateOrReplace) requests.
+  - `[SizeWindow <Single?>]`: 
+  - `[TimeWindow <String>]`: 
 
 ## RELATED LINKS
 
